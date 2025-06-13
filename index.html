@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraGlow Smart Ring - Your Personal Wellness Companion</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind's gray-50 */
+        }
+
+        /* Animation for elements fading in on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Main image transition */
+        #main-product-image {
+            transition: opacity 0.3s ease-in-out;
+            aspect-ratio: 1 / 1;
+        }
+
+        /* Thumbnail active state */
+        .thumbnail-active {
+            box-shadow: 0 0 0 2px #4f46e5; /* Indigo-600 */
+        }
+        
+        .thumbnail-image {
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+        }
+        
+        /* Custom button shadow and transition */
+        .btn-primary {
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.2), 0 4px 6px -2px rgba(79, 70, 229, 0.1);
+        }
+
+        /* AI Modal Styles */
+        #ai-modal {
+            transition: opacity 0.3s ease;
+        }
+        #ai-modal-content {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-30 shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-2">
+                    <svg class="h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.024.217 1.464l-.657.98c-.318.478-.885.644-1.396.434l-1.068-.446a1.125 1.125 0 00-1.222.15l-.657.98c-.318.478-.885.644-1.396.434l-1.068-.446a1.125 1.125 0 00-1.222.15l-.657.98c-.318.478-.885.644-1.396.434l-1.068-.446a1.125 1.125 0 00-1.222.15l-.657.98c-.318.478-.885.644-1.396.434l-1.068-.446a1.125 1.125 0 00-1.222.15l-.657.98c-.318.478-.217 1.096.217 1.464l1.068.89c.257.214.405.53.405.864v.568c0 .334-.148.65-.405.864l-1.068.89c-.442.369-.535 1.024-.217 1.464l.657.98c.318.478.885.644 1.396.434l1.068-.446c.479-.2.996-.028 1.222.15l.657.98c.318.478.885.644 1.396.434l1.068-.446c.479-.2.996-.028 1.222.15l.657.98c.318.478.885.644 1.396.434l1.068-.446c.479-.2.996-.028 1.222.15l.657.98c.318.478.217 1.096-.217-1.464l-1.068.89a1.125 1.125 0 01-.405.864v.568c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-.568c0-.334-.148.65-.405-.864l-1.068-.89c-.442.369-.535-1.024-.217-1.464l.657-.98c.318.478.885.644 1.396.434l1.068.446c.479-.2.996-.028 1.222-.15l.657-.98c.318.478.885.644 1.396.434l1.068.446c.479-.2.996-.028 1.222.15l.657-.98c.318.478.885.644 1.396.434l1.068.446c.479-.2.996-.028 1.222.15l.657-.98c.318.478.217-1.096-.217-1.464l-1.068-.89a1.125 1.125 0 01-.405.864v-.568c0-.414-.336-.75-.75-.75h-4.5a.75.75 0 00-.75.75z" />
+                    </svg>
+                    <span class="font-bold text-xl text-gray-900">AuraGlow</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#features" class="hidden md:inline text-gray-500 hover:text-indigo-600 transition-colors">Features</a>
+                    <a href="#reviews" class="hidden md:inline text-gray-500 hover:text-indigo-600 transition-colors">Reviews</a>
+                    <a href="checkout.html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md hover:bg-indigo-700 transition-colors btn-primary">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 md:mt-16">
+        <!-- Product Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            
+            <!-- Product Image Gallery -->
+            <div class="reveal">
+                <div class="bg-white p-4 rounded-2xl shadow-lg">
+                    <img id="main-product-image" src="https://images.unsplash.com/photo-1619597738217-74fb3de2a5c7?q=80&w=2070&auto=format&fit=crop" alt="AuraGlow Smart Ring in Silver" class="w-full h-auto rounded-xl object-cover cursor-zoom-in"
+                    onerror="this.onerror=null;this.src='https://placehold.co/600x600/e0e0e0/757575?text=Image+Not+Found';">
+                </div>
+                <div class="grid grid-cols-5 gap-3 mt-4">
+                    <img src="https://images.unsplash.com/photo-1619597738217-74fb3de2a5c7?q=80&w=2070&auto=format&fit=crop" alt="Ring View 1" class="thumbnail-image cursor-pointer rounded-lg hover:opacity-80 transition-opacity thumbnail-active" data-image="https://images.unsplash.com/photo-1619597738217-74fb3de2a5c7?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/120x120/e0e0e0/757575?text=Image+1';">
+                    <img src="https://images.unsplash.com/photo-1618292557333-e380eda71a8f?q=80&w=1964&auto=format&fit=crop" alt="Ring on a person's hand" class="thumbnail-image cursor-pointer rounded-lg hover:opacity-80 transition-opacity" data-image="https://images.unsplash.com/photo-1618292557333-e380eda71a8f?q=80&w=1964&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/120x120/e0e0e0/757575?text=Image+2';">
+                    <img src="https://images.unsplash.com/photo-1588623694850-8178a9a26384?q=80&w=1974&auto=format&fit=crop" alt="Smart Ring on a wireless charger" class="thumbnail-image cursor-pointer rounded-lg hover:opacity-80 transition-opacity" data-image="https://images.unsplash.com/photo-1588623694850-8178a9a26384?q=80&w=1974&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/120x120/e0e0e0/757575?text=Image+3';">
+                    <img src="https://images.unsplash.com/photo-1587280436841-8314a5155138?q=80&w=1974&auto=format&fit=crop" alt="Companion app user interface on a smartphone" class="thumbnail-image cursor-pointer rounded-lg hover:opacity-80 transition-opacity" data-image="https://images.unsplash.com/photo-1587280436841-8314a5155138?q=80&w=1974&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/120x120/e0e0e0/757575?text=Image+4';">
+                    <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=1964&auto=format&fit=crop" alt="Product packaging for the smart ring" class="thumbnail-image cursor-pointer rounded-lg hover:opacity-80 transition-opacity" data-image="https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=1964&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/120x120/e0e0e0/757575?text=Image+5';">
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div class="reveal">
+                <span class="text-indigo-600 font-semibold">NEW LAUNCH</span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mt-2">AuraGlow Smart Ring</h1>
+                <p class="mt-4 text-gray-500 text-lg">Your personal wellness companion. Track sleep, activity, recovery, and stress with unparalleled accuracy, all from a sleek, comfortable ring.</p>
+                
+                <div class="mt-6 flex items-baseline space-x-2">
+                    <span class="text-4xl font-bold text-gray-900">$299.00</span>
+                    <span class="text-xl text-gray-400 line-through">$349.00</span>
+                </div>
+                
+                <!-- Color Options -->
+                <div class="mt-8">
+                    <h3 class="text-sm font-medium text-gray-900">Color: <span id="selected-color-name" class="font-semibold">Titanium Silver</span></h3>
+                    <div id="color-selector" class="flex items-center space-x-3 mt-2">
+                        <button class="color-option h-8 w-8 rounded-full border-2 border-indigo-600 ring-2 ring-indigo-300" data-color="Titanium Silver" style="background-color: #d1d5db;"></button>
+                        <button class="color-option h-8 w-8 rounded-full border-2 border-transparent hover:border-gray-400" data-color="Matte Black" style="background-color: #111827;"></button>
+                        <button class="color-option h-8 w-8 rounded-full border-2 border-transparent hover:border-gray-400" data-color="Rose Gold" style="background-color: #fde68a;"></button>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="mt-8 flex flex-col gap-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center border border-gray-300 rounded-lg">
+                            <button id="decrease-quantity" class="px-3 py-2 text-gray-500 hover:text-gray-800 transition-colors">-</button>
+                            <span id="quantity" class="px-4 py-2 font-semibold">1</span>
+                            <button id="increase-quantity" class="px-3 py-2 text-gray-500 hover:text-gray-800 transition-colors">+</button>
+                        </div>
+                        <a href="checkout.html" class="flex-1">
+                            <button id="buy-now-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:bg-indigo-700 transition-all text-lg btn-primary flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                </svg>
+                                <span>Buy Now</span>
+                            </button>
+                        </a>
+                    </div>
+                     <button id="ask-ai-btn" class="w-full bg-slate-800 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:bg-slate-900 transition-all text-lg btn-primary flex items-center justify-center space-x-2">
+                        <span>✨ Ask a Question</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section id="features" class="mt-24 md:mt-32 reveal">
+            <h2 class="text-3xl font-bold text-center text-gray-900">Engineered for Life</h2>
+            <p class="text-lg text-gray-500 text-center mt-2 max-w-2xl mx-auto">Discover the technology that makes AuraGlow the most advanced wellness device.</p>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <h3 class="mt-6 text-xl font-bold">24/7 Heart Rate</h3>
+                    <p class="mt-2 text-gray-500">Monitors your heart rate day and night, providing insights into your cardiovascular health.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                    </div>
+                    <h3 class="mt-6 text-xl font-bold">Advanced Sleep Tracking</h3>
+                    <p class="mt-2 text-gray-500">Analyzes sleep stages (Deep, Light, REM) and provides a daily sleep score for optimal recovery.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full h-12 w-12 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.657 7.343A8 8 0 0117.657 18.657z" /><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 16.121A3 3 0 1014.12 11.88a3 3 0 00-4.242 4.242z" /></svg>
+                    </div>
+                    <h3 class="mt-6 text-xl font-bold">Durable & Waterproof</h3>
+                    <p class="mt-2 text-gray-500">Crafted from titanium and waterproof up to 100m, it's designed for every part of your day.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Reviews Section -->
+        <section id="reviews" class="mt-24 md:mt-32 reveal">
+             <div class="text-center">
+                <h2 class="text-3xl font-bold text-center text-gray-900">Loved by Innovators</h2>
+                <p class="text-lg text-gray-500 text-center mt-2 max-w-2xl mx-auto">See what our first users are saying about the AuraGlow experience.</p>
+                <button id="generate-review-btn" class="mt-4 bg-teal-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-teal-600 transition-colors btn-primary">
+                    ✨ Generate a Sample Review
+                </button>
+            </div>
+            <div id="reviews-list" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-md">
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop" class="w-12 h-12 rounded-full object-cover" alt="Reviewer Avatar" onerror="this.onerror=null;this.src='https://placehold.co/48x48/e0e0e0/757575?text=AV';">
+                        <div class="ml-4">
+                            <p class="font-bold">Sarah L.</p>
+                            <div class="flex items-center text-yellow-400">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600 italic">"I've tried every fitness tracker out there, and AuraGlow is in a league of its own. It's so comfortable I forget I'm wearing it, but the data is incredibly insightful."</p>
+                </div>
+                 <!-- Review 2 and 3 ... -->
+                 <div class="bg-white p-8 rounded-2xl shadow-md">
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" class="w-12 h-12 rounded-full object-cover" alt="Reviewer Avatar" onerror="this.onerror=null;this.src='https://placehold.co/48x48/e0e0e0/757575?text=MK';">
+                        <div class="ml-4">
+                            <p class="font-bold">Mark T.</p>
+                            <div class="flex items-center text-yellow-400">
+                               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600 italic">"Game-changer for my fitness routine. The readiness score tells me exactly when to push hard and when to recover. Plus, it looks amazing."</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-md">
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop" class="w-12 h-12 rounded-full object-cover" alt="Reviewer Avatar" onerror="this.onerror=null;this.src='https://placehold.co/48x48/e0e0e0/757575?text=JR';">
+                        <div class="ml-4">
+                            <p class="font-bold">Jen R.</p>
+                            <div class="flex items-center text-yellow-400">
+                               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600 italic">"The sleep tracking is a revelation. I've made small changes to my routine based on the app's feedback and my energy levels have never been better."</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-24 md:mt-32">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-bold text-lg">AuraGlow</h3>
+                    <p class="text-gray-400 mt-2 text-sm">Your personal wellness companion.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-200">Shop</h3>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white">AuraGlow Ring</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Chargers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Accessories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-200">Support</h3>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Warranty</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="font-semibold text-gray-200">Legal</h3>
+                    <ul class="mt-4 space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                &copy; 2024 AuraGlow Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Question Modal -->
+    <div id="ai-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div id="ai-modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 md:p-8 transform scale-95">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-gray-900">Ask AuraGlow AI</h2>
+                <button id="close-ai-modal" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="mt-4">
+                <textarea id="ai-question-input" class="w-full border-gray-300 rounded-lg p-3 focus:ring-indigo-500 focus:border-indigo-500" rows="3" placeholder="e.g., How does the ring track my stress levels?"></textarea>
+                <button id="get-ai-answer-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:bg-indigo-700 transition-all text-lg btn-primary flex items-center justify-center">
+                    Get Answer
+                </button>
+            </div>
+            <div id="ai-answer-container" class="mt-6">
+                <!-- AI answer will be injected here -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- On-Scroll Animation Logic ---
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            revealElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Image Gallery Logic ---
+            const mainImage = document.getElementById('main-product-image');
+            const thumbnails = document.querySelectorAll('.thumbnail-image');
+
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    const newImageSrc = this.dataset.image;
+                    thumbnails.forEach(t => t.classList.remove('thumbnail-active'));
+                    this.classList.add('thumbnail-active');
+                    mainImage.style.opacity = '0';
+                    setTimeout(() => {
+                        mainImage.src = newImageSrc;
+                        mainImage.style.opacity = '1';
+                    }, 300);
+                });
+            });
+
+            // --- Color Selector Logic ---
+            const colorOptions = document.querySelectorAll('.color-option');
+            const selectedColorName = document.getElementById('selected-color-name');
+
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    selectedColorName.textContent = this.dataset.color;
+                    colorOptions.forEach(opt => {
+                        opt.classList.remove('border-indigo-600', 'ring-2', 'ring-indigo-300');
+                        opt.classList.add('border-transparent');
+                    });
+                    this.classList.add('border-indigo-600', 'ring-2', 'ring-indigo-300');
+                    this.classList.remove('border-transparent');
+                });
+            });
+
+            // --- Quantity Selector Logic ---
+            const decreaseBtn = document.getElementById('decrease-quantity');
+            const increaseBtn = document.getElementById('increase-quantity');
+            const quantityEl = document.getElementById('quantity');
+            let quantity = 1;
+
+            decreaseBtn.addEventListener('click', () => {
+                if (quantity > 1) {
+                    quantity--;
+                    quantityEl.textContent = quantity;
+                }
+            });
+
+            increaseBtn.addEventListener('click', () => {
+                quantity++;
+                quantityEl.textContent = quantity;
+            });
+
+            // --- Buy Now Button Logic ---
+            const buyNowBtn = document.getElementById('buy-now-btn');
+
+            buyNowBtn.addEventListener('click', (e) => {
+                 // The click simply navigates via the <a> tag now.
+                 // We can still add animation if we want.
+                buyNowBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    buyNowBtn.style.transform = 'scale(1)';
+                }, 200);
+            });
+
+            // --- Gemini AI Features ---
+
+            const callGemini = async (prompt) => {
+                const apiKey = ""; // Leave blank, handled by environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{ role: "user", parts: [{ text: prompt }] }]
+                };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+                    
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        console.error('Unexpected API response structure:', result);
+                        return "Sorry, I couldn't get a response. Please try again.";
+                    }
+                } catch (error) {
+                    console.error("Error calling Gemini API:", error);
+                    return "Sorry, there was an error connecting to the AI. Please check your connection and try again.";
+                }
+            };
+
+            // --- AI Question Modal Logic ---
+            const aiModal = document.getElementById('ai-modal');
+            const aiModalContent = document.getElementById('ai-modal-content');
+            const askAiBtn = document.getElementById('ask-ai-btn');
+            const closeAiModalBtn = document.getElementById('close-ai-modal');
+            const getAiAnswerBtn = document.getElementById('get-ai-answer-btn');
+            const aiQuestionInput = document.getElementById('ai-question-input');
+            const aiAnswerContainer = document.getElementById('ai-answer-container');
+
+            const openModal = () => {
+                aiModal.classList.remove('hidden');
+                setTimeout(() => {
+                    aiModal.classList.remove('opacity-0');
+                    aiModalContent.classList.remove('scale-95');
+                }, 10);
+            };
+
+            const closeModal = () => {
+                aiModal.classList.add('opacity-0');
+                aiModalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    aiModal.classList.add('hidden');
+                }, 300);
+            };
+            
+            askAiBtn.addEventListener('click', openModal);
+            closeAiModalBtn.addEventListener('click', closeModal);
+            aiModal.addEventListener('click', (e) => {
+                if(e.target === aiModal) {
+                    closeModal();
+                }
+            });
+
+            getAiAnswerBtn.addEventListener('click', async () => {
+                const question = aiQuestionInput.value.trim();
+                if (!question) {
+                    aiAnswerContainer.innerHTML = `<p class="text-red-500">Please enter a question.</p>`;
+                    return;
+                }
+
+                aiAnswerContainer.innerHTML = `
+                    <div class="flex items-center justify-center">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                        <p class="ml-3 text-gray-500">Thinking...</p>
+                    </div>`;
+
+                const productContext = "You are a helpful AI assistant for a product called AuraGlow Smart Ring. It's a personal wellness companion that tracks sleep, activity, recovery, and stress. It costs $299. It's made of titanium and is waterproof. Key features include 24/7 Heart Rate monitoring and Advanced Sleep Tracking.";
+                const prompt = `${productContext}\n\nA customer has a question: "${question}"\n\nProvide a clear, friendly, and concise answer.`;
+                
+                const answer = await callGemini(prompt);
+                aiAnswerContainer.innerHTML = `<div class="p-4 bg-indigo-50 rounded-lg text-gray-700">${answer.replace(/\n/g, '<br>')}</div>`;
+            });
+
+            // --- Generate Review Logic ---
+            const generateReviewBtn = document.getElementById('generate-review-btn');
+            const reviewsList = document.getElementById('reviews-list');
+
+            generateReviewBtn.addEventListener('click', async () => {
+                generateReviewBtn.disabled = true;
+                generateReviewBtn.textContent = '✨ Generating...';
+
+                const prompt = "Write a creative and positive customer review for the 'AuraGlow Smart Ring'. The review should sound authentic and mention a specific benefit the user experienced, like improved sleep or fitness insights. The reviewer's name should be 'Alex D.'";
+                
+                const reviewText = await callGemini(prompt);
+
+                const newReviewHTML = `
+                <div class="bg-white p-8 rounded-2xl shadow-md reveal visible">
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1976&auto=format&fit=crop" class="w-12 h-12 rounded-full object-cover" alt="Reviewer Avatar" onerror="this.onerror=null;this.src='https://placehold.co/48x48/e0e0e0/757575?text=AD';">
+                        <div class="ml-4">
+                            <p class="font-bold">Alex D.</p>
+                             <div class="flex items-center text-yellow-400">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600 italic">"${reviewText}"</p>
+                    <p class="mt-2 text-xs text-gray-400 text-right">(AI-generated sample review)</p>
+                </div>
+                `;
+                reviewsList.insertAdjacentHTML('beforeend', newReviewHTML);
+                
+                generateReviewBtn.disabled = false;
+                generateReviewBtn.textContent = '✨ Generate a Sample Review';
+            });
+
+        });
+    </script>
+</body>
+</html>
